@@ -1,0 +1,26 @@
+<annotation verified="yes">
+	<folder>test_images</folder>
+	<filename>10.jpg</filename>
+	<path>/Users/jvkyleeclarin/Downloads/synthetic image generationtest_images</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>40</width>
+		<height>40</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>octagon</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>533</xmin>
+			<ymin>275</ymin>
+			<xmax>573</xmax>
+			<ymax>315</ymax>
+		</bndbox>
+	</object>
+</annotation>
