@@ -5,7 +5,7 @@
 % pentagon, quarterCircle, rectangle, semiCircle, square, star, trapezoid,
 % and triangle
 
-clear all
+clearvars
 %% Step 1 - Getting user input and import relevant data
 
 % get background images
@@ -49,7 +49,7 @@ for cellIndex = 1:size_background_imgs(1) % iterate over background images
         fclose(fid);
         rowSetting = find(strcmp(settings{1}, shapeChoice));
         fontSize = str2num(settings{2}{rowSetting});
-        position = [str2num(settings{3}{rowSetting}), str2num(settings{4}{rowSetting})];
+        position = [str2num(settings{3}{rowSetting}), str2num(settings{4}{rowSetting})]; %#ok<*ST2NM>
 
         % Get coordinates for black pixels by selecting non-white pixels
         logic_mask = baseShape(:,:,1)~=255 | baseShape(:,:,2)~=255 | baseShape(:,:,3)~=255;
@@ -114,7 +114,7 @@ for cellIndex = 1:size_background_imgs(1) % iterate over background images
                 little_cat(x_tr(n), y_tr(n), :) = shape(x_cor(n), y_cor(n), :);
             end
 
-            % Write the image as lossless jpg
+            % Write the image as lossless jpg, makes it faster that normal
             i = i + 1;
             imwrite(little_cat, ['test_images/', num2str(i),'.jpg'], 'jpg', 'Quality', 100.0);
             
@@ -177,7 +177,7 @@ function fileList = getAllFiles(dirName) % I grabbed this from the internet
                                                %   that are not '.' or '..'
   for iDir = find(validIndex)                  % Loop over valid subdirectories
     nextDir = fullfile(dirName,subDirs{iDir});    % Get the subdirectory path
-    fileList = [fileList; getAllFiles(nextDir)];  % Recursively call getAllFiles
+    fileList = [fileList; getAllFiles(nextDir)];  %#ok<AGROW> % Recursively call getAllFiles
   end
 
 end
