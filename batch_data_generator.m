@@ -43,10 +43,13 @@ for cellIndex = 1:size_background_imgs(1) % iterate over background images
     for shapeChoice = shape_list % iterate over shapes
         % get important info for each shape
         baseShape = imread(['assets/shape_templates/', strjoin(shapeChoice), '.png']);
-        settings = readtable('assets/settings.csv');
-        rowSetting = find(strcmp(settings{:,1}, shapeChoice));
-        fontSize = settings{rowSetting,2};
-        position = [settings{rowSetting,3}, settings{rowSetting,4}];
+        % settings = readtable('assets/settings.csv');
+        fid = fopen('assets/settings.csv');
+        settings = textscan(fid, '%s%s%s%s', 'Delimiter', ',');
+        fclose(fid);
+        rowSetting = find(strcmp(settings{1}, shapeChoice));
+        fontSize = str2num(settings{2}{rowSetting});
+        position = [str2num(settings{3}{rowSetting}), str2num(settings{4}{rowSetting})];
 
         % Get coordinates for black pixels by selecting non-white pixels
         logic_mask = baseShape(:,:,1)~=255 | baseShape(:,:,2)~=255 | baseShape(:,:,3)~=255;
