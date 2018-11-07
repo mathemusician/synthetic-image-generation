@@ -36,7 +36,10 @@ for cellIndex = 1:size_background_imgs(1) % iterate over background images
     last_word = strsplit(backgroundString, '.');
     
     % check if images are jpeg
-    if isempty(setdiff(last_word(end), {'DS_Store'})) == 1
+    if  isempty(setdiff(last_word(end), {'jpg'})) == 1 || ...
+        isempty(setdiff(last_word(end), {'JPG'})) == 1 || ...
+        isempty(setdiff(last_word(end), {'jpeg'})) == 1
+    else
         continue
     end
     
@@ -60,9 +63,14 @@ for cellIndex = 1:size_background_imgs(1) % iterate over background images
 
         for rand_var=1:batchSize
             % Generate random non-black color for the object
-            rgb1(1) = randi([60,255],1);
-            rgb1(2) = randi([60,255],1);
-            rgb1(3) = randi([0, 60],1);
+            rgb1(1) = randi([0,255],1);
+            rgb1(2) = randi([0,255],1);
+            rgb1(3) = randi([0,255],1);
+            
+            % Change the entire image from black to another color
+            shape(:,:,1) = baseShape(:,:,1) + rgb1(1);
+            shape(:,:,2) = baseShape(:,:,2) + rgb1(2);
+            shape(:,:,3) = baseShape(:,:,3) + rgb1(3);
 
             % Generate random color that contrasts with object color
             loopFlag = 1;
@@ -80,18 +88,11 @@ for cellIndex = 1:size_background_imgs(1) % iterate over background images
             % Generate random alphanumeric
             alphanumeric = aV(randi(numel(aV)));
 
-
-            % Change the entire image from black to another color
-            clear shape
-            shape(:,:,1) = baseShape(:,:,1) + rgb1(1);
-            shape(:,:,2) = baseShape(:,:,2) + rgb1(2);
-            shape(:,:,3) = baseShape(:,:,3) + rgb1(3);
-
             % Apply mask
-            maskedShape = bsxfun(@times, shape, cast(~logic_mask, 'like', shape));
+            % maskedShape = bsxfun(@times, shape, cast(~logic_mask, 'like', shape));
 
             % Draw and rasterize alphanumeric on the image
-            modifiedShape = insertText(maskedShape, position, alphanumeric, ...
+            modifiedShape = insertText(shape, position, alphanumeric, ...
                 'FontSize', fontSize, 'BoxOpacity', 0, 'AnchorPoint', 'Center', ...
                 'Font', 'Arial', 'TextColor', rgb2);
 
@@ -108,7 +109,8 @@ for cellIndex = 1:size_background_imgs(1) % iterate over background images
             change_y = randi([0 y_max],1);
             x_tr = x_cor + change_x;
             y_tr = y_cor + change_y;
-
+            
+            % draw shape on image
             size_x_cor = size(x_cor);
             for n = 1:size_x_cor(1)
                 little_cat(x_tr(n), y_tr(n), :) = shape(x_cor(n), y_cor(n), :);
