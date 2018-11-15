@@ -9,7 +9,7 @@ clearvars
 %% Step 1 - Getting user input and import relevant data
 
 % get background images
-batchSize = 2;
+batchSize = 2;% each shape gets this many different letters per shape per background
 background_imgs = getAllFiles('backgrounds/');
 
 
@@ -124,7 +124,7 @@ for cellIndex = 1:size_background_imgs(1) % iterate over background images
             % MAKE XML FILE USING BRUTE FORCE
             folder = 'test_images';
             filename = [num2str(i),'.jpg'];
-            path = [pwd, folder];
+            path = [pwd, '\', folder];
             height = 40; % this is something that's known
             width = 40;
             depth = 3;
@@ -135,7 +135,7 @@ for cellIndex = 1:size_background_imgs(1) % iterate over background images
             xml_string = ['<annotation verified="yes">\n', ...
                         '\t<folder>' folder '</folder>\n', ...
                         '\t<filename>' filename '</filename>\n' ...
-                        '\t<path>' path '</path>\n' ...
+                        '\t<path>' '%s' '</path>\n' ...
                         '\t<source>\n\t\t<database>Unknown</database>\n\t</source>\n' ...
                         '\t<size>' newline ...
                         '\t\t<width>' int2str(width) '</width>' newline ...
@@ -159,7 +159,7 @@ for cellIndex = 1:size_background_imgs(1) % iterate over background images
             xml_name = [num2str(i) '.xml'];
             xml_path = [folder '/' xml_name];
             fileID = fopen(xml_path,'w');
-            fprintf(fileID, xml_string);
+            fprintf(fileID, xml_string, path);
             fclose(fileID);
         end
     end
