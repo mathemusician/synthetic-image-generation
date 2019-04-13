@@ -6,3 +6,7 @@ cd ..
 git add submodule_name
 git commit -m "updating submodule to latest"
 git push origin master
+
+
+How to get rid of entire folders:
+git rm -r folder-name
