@@ -1,41 +1,41 @@
 # synthetic-image-generation
 
-This is synthetic image generation to train machine learning models for the UH drone team.
+This is synthetic image generation to train machine learning models for the UH drone team.<br />
 
-In order to run:
-    1) Install dependencies:
-        python 3.6.2+, numpy, matplotlib, pillow, tqdm
-    2) Unzip backgrounds from https://drive.google.com/file/d/18enPCV9VU2c9fEIRByIQA99x_6gbzIzB/view?usp=sharing
-    3) cd into synthetic-image-generation folder with terminal
-    4) python3 batch_data_generator.py
+In order to run: <br />
+    1) Install dependencies: <br />
+        python 3.6.2+, numpy, matplotlib, pillow, tqdm <br />
+    2) Unzip backgrounds from https://drive.google.com/file/d/18enPCV9VU2c9fEIRByIQA99x_6gbzIzB/view?usp=sharing <br />
+    3) cd into synthetic-image-generation folder with terminal <br />
+    4) python3 batch_data_generator.py <br />
 
 
 In the legacy folder, there's a jupyter notebook and matlab file that does almost the
-same thing that batch_data_generator.py does.
+same thing that batch_data_generator.py does. <br />
 
 
-A few tips:
-
-How to update submodule:
-    cd submodule_name
-    git checkout master && git pull
-    cd ..
-    git add submodule_name
-    git commit -m "updating submodule to latest"
-    git push origin master
-
-
-How to get rid of entire folders with git:
-    git rm -r folder-name
+A few tips: <br />
+<br />
+How to update submodule: <br />
+    cd submodule_name <br />
+    git checkout master && git pull<br />
+    cd ..<br />
+    git add submodule_name<br />
+    git commit -m "updating submodule to latest"<br />
+    git push origin master<br />
 
 
-How to add tracked items ONLY with git:
-    git add -u
+How to get rid of entire folders with git:<br />
+    git rm -r folder-name<br />
 
 
-How to split video into images:
-    ffmpeg -i 3.mp4 -vf fps= <# images/ # of seconds> out%d.png
+How to add tracked items ONLY with git:<br />
+    git add -u<br />
 
 
-Changing file names in bulk:
-    Use file_renamer.py
+How to split video into images:<br />
+    ffmpeg -i 3.mp4 -vf fps= <# images/ # of seconds> out%d.png<br />
+
+
+Changing file names in bulk:<br />
+    Use file_renamer.py<br />
