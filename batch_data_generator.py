@@ -21,7 +21,7 @@ from tqdm import tqdm
 
 #############################################
 # SPECIFY NUMBER OF IMAGES YOU WANT TO MAKE #
-number_of_images = 1000
+number_of_images = 100
 #############################################
 
 
@@ -36,10 +36,13 @@ if 'backgrounds.zip' in backgrounds:
     backgrounds.remove('backgrounds.zip')
 backgrounds_raw = []
 for files in backgrounds:
-    im = Image.open(join(backgrounds_path,files))
-    im = im.convert('RGB')
-    im = np.asarray(im, dtype=np.uint8)
-    backgrounds_raw.append(im)
+    try:
+        im = Image.open(join(backgrounds_path,files))
+        im = im.convert('RGB')
+        im = np.asarray(im, dtype=np.uint8)
+        backgrounds_raw.append(im)
+    except OSError:
+        pass
 
 shapes_path = join(cwd, 'assets', 'shape_templates')
 shapes = [f for f in listdir(shapes_path) if isfile(join(shapes_path, f))]
@@ -62,7 +65,7 @@ alphanumeric_vector = ['A', 'B', 'C', 'D', 'E', 'F', \
 for file_number in tqdm(range(number_of_images)):
     # choose random alphanumeric and background
     letter = alphanumeric_vector[randint(0,len(alphanumeric_vector)-1)]
-    background = copy.deepcopy(backgrounds_raw[randint(0,len(backgrounds)-1)])
+    background = copy.deepcopy(backgrounds_raw[randint(0,len(backgrounds_raw)-1)])
     background.setflags(write=1) # make image writable
     shape_choice = randint(0,len(shapes)-1)
     shape = shapes_raw[shape_choice]
@@ -86,7 +89,12 @@ for file_number in tqdm(range(number_of_images)):
     x_tr = x_coor + change_x
     y_tr = y_coor + change_y
     background_mask = (x_tr, y_tr)
-    background[background_mask] = color_of_background
+    # add randomness to background
+    l, w, h = (40,40,3) # this is something that's known
+    color_of_background = color_of_background.reshape(1,1,h) # make background 3D
+    color_of_background = color_of_background.repeat(l,axis=0).repeat(w,axis=1)
+    color_of_background = color_of_background - np.random.rand(l,w,h)/8 # add randomness
+    background[background_mask] = color_of_background[x_coor,y_coor]
 
 
     # draw letter on picture
