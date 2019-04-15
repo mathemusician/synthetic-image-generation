@@ -5,7 +5,7 @@ This is synthetic image generation to train machine learning models for the UH d
 In order to run:
     1) Install dependencies:
         python 3.6.2+, numpy, matplotlib, pillow, tqdm
-    2) Unzip backgrounds in backgrounds folder
+    2) Unzip backgrounds from https://drive.google.com/file/d/18enPCV9VU2c9fEIRByIQA99x_6gbzIzB/view?usp=sharing
     3) cd into synthetic-image-generation folder with terminal
     4) python3 batch_data_generator.py
 

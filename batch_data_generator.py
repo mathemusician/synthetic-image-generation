@@ -21,7 +21,7 @@ from tqdm import tqdm
 
 #############################################
 # SPECIFY NUMBER OF IMAGES YOU WANT TO MAKE #
-number_of_images = 100
+number_of_images = 1000
 #############################################
 
 
@@ -32,6 +32,8 @@ backgrounds_path = join(cwd, 'backgrounds')
 backgrounds = [f for f in listdir(backgrounds_path) if isfile(join(backgrounds_path, f))]
 if '.DS_Store' in backgrounds:
     backgrounds.remove('.DS_Store')
+if 'backgrounds.zip' in backgrounds:
+    backgrounds.remove('backgrounds.zip')
 backgrounds_raw = []
 for files in backgrounds:
     im = Image.open(join(backgrounds_path,files))
