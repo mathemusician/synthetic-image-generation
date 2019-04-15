@@ -1,7 +1,7 @@
 '''
 The purpose of this file is to use Python to make the images to train AI models with.
 
-Dependencies: python 3.6.2, numpy, matplotlib, pillow, tqdm
+Dependencies: python 3.6.2+, numpy, matplotlib, pillow, tqdm
 
 Python is a bit more accessible than Matlab; therefore, this file will be better for
 making training images in the long run.
