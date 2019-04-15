@@ -52,14 +52,15 @@ alphanumeric_vector = ['A', 'B', 'C', 'D', 'E', 'F', \
 # choose random alphanumeric and background
 letter = alphanumeric_vector[randint(0,len(alphanumeric_vector)-1)]
 background = backgrounds_raw[randint(0,len(backgrounds)-1)]
-shape = shapes_raw[randint(0,len(shapes)-1)]
+shape_choice = randint(0,len(shapes)-1)
+shape = shapes_raw[shape_choice]
 
 # choose random color
 color_of_background = np.array([randint(0,255),randint(0,255),randint(0,255)])
 color_of_letter =     np.array([randint(0,255),randint(0,255),randint(0,255)])
 color_difference = np.sqrt(np.sum(np.square(color_of_background-color_of_letter)))
-# make sure the color difference is greater than 7
-while color_difference < 7:
+# make sure the color difference is greater than a threshold
+while color_difference < 12:
     color_of_letter = np.array([randint(0,255),randint(0,255),randint(0,255)])
     color_difference = np.sqrt(np.sum(np.square(color_of_background-color_of_letter)))
     
@@ -79,8 +80,8 @@ background[background_mask] = color_of_background
 # draw letter on picture
 im = Image.fromarray(background)
 draw = ImageDraw.Draw(im)
-font_path = join(cwd, "fonts", "Arial.ttf")
-font_size = 25
+font_path = join(cwd, 'fonts', 'Arial.ttf')
+font_size = 26
 font = ImageFont.truetype(font_path, font_size)
 # change color to rgba
 rgba_color = tuple(color_of_letter.tolist() + [0])
@@ -88,6 +89,48 @@ draw.text((12+change_y, 8+change_x), letter, font=font, fill=rgba_color)
 
 
 # create jpeg
-
+im.save(join(cwd, "test_images", "new_picture.jpeg"),'jpeg')
 
 # create xml file
+folder = 'test_images'
+filename = 'new_picture.jpeg'
+path = join(cwd, folder)
+height = 40 # this is something that's known
+width = 40
+depth = 3
+xmin = change_y      # I'm not sure why it works when it's switched
+xmax = change_y + 40 # but it does...
+ymin = change_x
+ymax = change_x + 40
+newline = '\n'
+xml_string = [  '<annotation verified="yes">\n', 
+                '\t<folder>', folder, '</folder>\n',
+                '\t<filename>', filename, '</filename>\n',
+                '\t<path>', path, '</path>\n',
+                '\t<source>\n\t\t<database>Unknown</database>\n\t</source>\n',
+                '\t<size>', newline,
+                '\t\t<width>', str(width), '</width>', newline,
+                '\t\t<height>', str(height), '</height>', newline,
+                '\t\t<depth>', str(depth), '</depth>', newline,
+                '\t</size>\n',
+                '\t<segmented>0</segmented>\n',
+                '\t<object>', newline,
+                '\t\t<name>', shapes[shape_choice][:-4], '</name>', newline,
+                '\t\t<pose>Unspecified</pose>', newline,
+                '\t\t<truncated>0</truncated>', newline,
+                '\t\t<difficult>0</difficult>', newline,
+                '\t\t<bndbox>', newline,
+                '\t\t\t<xmin>', str(xmin), '</xmin>', newline,
+                '\t\t\t<ymin>', str(ymin), '</ymin>', newline,
+                '\t\t\t<xmax>', str(xmax), '</xmax>', newline,
+                '\t\t\t<ymax>', str(ymax), '</ymax>', newline,
+                '\t\t</bndbox>', newline,
+                '\t</object>\n',
+                '</annotation>\n']
+xml_name ='new_picture.xml'
+xml_path = join(folder, xml_name)
+file_object = open(xml_path, 'w')
+file_object.write(''.join(xml_string))
+file_object.close()
+
+
