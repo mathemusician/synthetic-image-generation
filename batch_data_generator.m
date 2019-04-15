@@ -116,7 +116,7 @@ for cellIndex = 1:size_background_imgs(1) % iterate over background images
                 little_cat(x_tr(n), y_tr(n), :) = shape(x_cor(n), y_cor(n), :);
             end
 
-            % Write the image as lossless jpg, makes it faster that normal
+            % Write the image as lossless jpg, makes it faster than normal
             i = i + 1;
             imwrite(little_cat, ['test_images/', num2str(i),'.jpg'], 'jpg', 'Quality', 100.0);
             
