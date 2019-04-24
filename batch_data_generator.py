@@ -59,7 +59,7 @@ alphanumeric_vector = ['A', 'B', 'C', 'D', 'E', 'F', \
                        'M', 'N', 'O', 'P', 'Q', 'R', \
                        'S', 'T', 'U', 'V', 'W', 'X', \
                        'Y', 'Z', '1', '2', '3', '4', \
-                       '5', '6', '7', '8', '9']
+                       '5', '6', '7', '8', '9', '0']
 
 
 for file_number in tqdm(range(number_of_images)):
@@ -109,11 +109,11 @@ for file_number in tqdm(range(number_of_images)):
 
 
     # create jpeg
-    im.save(join(cwd, "test_images", f"{file_number}.jpeg"),'jpeg')
+    im.save(join(cwd, "test_images", "%s.jpeg" % (file_number)),'jpeg')
 
     # create xml file
     folder = 'test_images'
-    filename = f'{file_number}.jpeg'
+    filename = '%s.jpeg' % (file_number)
     path = join(cwd, folder)
     height = 40 # this is something that's known
     width = 40
@@ -147,10 +147,8 @@ for file_number in tqdm(range(number_of_images)):
                     '\t\t</bndbox>', newline,
                     '\t</object>\n',
                     '</annotation>\n']
-    xml_name = f'{file_number}.xml'
+    xml_name = '%s.xml' % (file_number)
     xml_path = join(folder, xml_name)
     file_object = open(xml_path, 'w')
     file_object.write(''.join(xml_string))
     file_object.close()
-
-
