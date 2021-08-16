@@ -1,6 +1,6 @@
 # synthetic-image-generation
 
-This are synthetic image generation scripts used to train machine learning models for the UH drone team.<br />
+These are synthetic image generation scripts used to train machine learning models for the UH drone team.<br />
 
 In order to run: <br />
     1) Install dependencies: <br />
